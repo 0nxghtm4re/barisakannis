@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barışalım mı?</title>
+    <style>
+        body {
+            background-color: #000000;
+            color: #ffffff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            user-select: none;
+        }
+
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 50px;
+            text-align: center;
+            z-index: 10;
+            padding: 0 20px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        button {
+            padding: 15px 35px;
+            font-size: 1.5rem;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: transform 0.15s ease, background-color 0.2s;
+        }
+
+        #yesBtn {
+            background-color: #2ecc71;
+            color: white;
+            z-index: 20;
+        }
+
+        #yesBtn:hover {
+            background-color: #27ae60;
+        }
+
+        #noBtn {
+            background-color: #e74c3c;
+            color: white;
+            z-index: 30;
+        }
+
+        #noBtn:hover {
+            background-color: #c0392b;
+        }
+    </style>
+</head>
+<body>
+
+    <h1 id="question">barisakmi annis</h1>
+
+    <div class="buttons">
+        <button id="yesBtn">Evet</button>
+        <button id="noBtn">Hayır</button>
+    </div>
+
+    <script>
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
+        const question = document.getElementById('question');
+
+        let noCount = 0;
+
+        noBtn.addEventListener('click', () => {
+            noCount++;
+
+            // 60. tıklamada Evet butonu tüm ekranı kaplar
+            if (noCount >= 60) {
+                yesBtn.style.position = 'fixed';
+                yesBtn.style.top = '0';
+                yesBtn.style.left = '0';
+                yesBtn.style.width = '100vw';
+                yesBtn.style.height = '100vh';
+                yesBtn.style.transform = 'none';
+                yesBtn.style.borderRadius = '0';
+                yesBtn.style.fontSize = '5rem';
+                yesBtn.style.zIndex = '999';
+                noBtn.style.display = 'none';
+                return;
+            }
+
+            // Hayır butonunu ekranda rastgele bir yere ışınla
+            const maxX = window.innerWidth - noBtn.offsetWidth - 20;
+            const maxY = window.innerHeight - noBtn.offsetHeight - 20;
+            const randomX = Math.max(10, Math.floor(Math.random() * maxX));
+            const randomY = Math.max(10, Math.floor(Math.random() * maxY));
+
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = randomX + 'px';
+            noBtn.style.top = randomY + 'px';
+
+            // Evet butonunu her seferinde büyüt
+            const scale = 1 + (noCount * 0.25);
+            yesBtn.style.transform = `scale(${scale})`;
+        });
+
+        // Evet'e basıldığında çıkacak ekran
+        yesBtn.addEventListener('click', () => {
+            document.body.innerHTML = `
+                <div style="text-align:center; padding: 20px;">
+                    <h1 style="font-size: 3.5rem; color: #2ecc71;">aminiyerimannis </h1>
+                </div>
+            `;
+        });
+    </script>
+
+</body>
+</html>
